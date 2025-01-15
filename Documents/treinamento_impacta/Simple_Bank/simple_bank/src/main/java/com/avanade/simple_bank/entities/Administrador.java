@@ -24,4 +24,29 @@ public class Administrador {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_USUARIO")
 	private Usuario usuario;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 }

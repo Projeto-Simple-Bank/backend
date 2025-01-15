@@ -37,5 +37,52 @@ public class Transacao {
 	
 	@Column(name = "VALOR")
 	private double valor;
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
+	public int getTipoTransacao() {
+		return tipoTransacao;
+	}
+
+	public void setTipoTransacao(int tipoTransacao) {
+		this.tipoTransacao = tipoTransacao;
+	}
+
+	public int getTipoOperacao() {
+		return tipoOperacao;
+	}
+
+	public void setTipoOperacao(int tipoOperacao) {
+		this.tipoOperacao = tipoOperacao;
+	}
+
+	public Date getDataTransacao() {
+		return dataTransacao;
+	}
+
+	public void setDataTransacao(Date dataTransacao) {
+		this.dataTransacao = dataTransacao;
+	}
+
+	public double getValor() {
+		return valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
 }
