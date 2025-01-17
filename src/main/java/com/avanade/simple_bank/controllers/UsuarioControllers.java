@@ -26,9 +26,17 @@ public class UsuarioControllers {
 		return usuarioService.listarUsuarios();
 	}
 	
-	@PostMapping("/novo")
+	@PostMapping("/criar-usuario")
 	public ResponseEntity<?> incluir(@RequestBody Usuario usuario){
 		try {
+			if(!usuario.getCpf().matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")){
+				throw new RuntimeException("CPF inválido");
+			}
+
+			if(!usuario.getRg().matches("\\d{2}\\.\\d{3}\\.\\d{3}-\\d")){
+				throw new RuntimeException("RG inválido");
+			}
+
 			return new ResponseEntity<Usuario>(
 					usuarioService.incluirUsuario(usuario), HttpStatus.CREATED);
 		} catch (Exception e) {
