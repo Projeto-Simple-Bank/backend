@@ -2,17 +2,11 @@ package com.avanade.simple_bank.entities;
 
 import java.sql.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+
+import com.avanade.simple_bank.enumerador.TipoTransacao;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "TB_TRANSACAO")
@@ -21,22 +15,26 @@ public class Transacao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private int id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_CONTA")
-	private Conta conta;
-	
-	@Column(name = "TIPO_TRASACAO")
-	private int tipoTransacao; // vai virar enum
+
+	@Column(name = "TIPO_TRANSACAO")
+	@Enumerated(EnumType.ORDINAL)
+	private TipoTransacao tipoTransacao;
 	
 	@Column(name = "TIPO_OPERACAO")
 	private int tipoOperacao; // vai virar enum
 
-	@Column(name = "DATA_TRASACAO")
-	private Date dataTransacao;
+	//@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "DATA_TRANSACAO")
+	//@CreationTimestamp
+	private String dataTransacao; // por enquanto vai ficar como string só para funcionar
 	
 	@Column(name = "VALOR")
 	private double valor;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_CONTA")
+	private Conta conta;
+
 
 	public int getId() {
 		return id;
@@ -54,11 +52,11 @@ public class Transacao {
 		this.conta = conta;
 	}
 
-	public int getTipoTransacao() {
+	public TipoTransacao getTipoTransacao() {
 		return tipoTransacao;
 	}
 
-	public void setTipoTransacao(int tipoTransacao) {
+	public void setTipoTransacao(TipoTransacao tipoTransacao) {
 		this.tipoTransacao = tipoTransacao;
 	}
 
@@ -70,11 +68,11 @@ public class Transacao {
 		this.tipoOperacao = tipoOperacao;
 	}
 
-	public Date getDataTransacao() {
+	public String getDataTransacao() {
 		return dataTransacao;
 	}
 
-	public void setDataTransacao(Date dataTransacao) {
+	public void setDataTransacao(String dataTransacao) {
 		this.dataTransacao = dataTransacao;
 	}
 

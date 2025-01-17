@@ -18,15 +18,15 @@ public class Ted {
 	@Column(name = "ID")
 	private int id;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_CONTA")
-	private Conta conta;
-	
 	@Column(name = "TARIFA")
 	private double tarifa;
 	
 	@Column(name = "DESCRICAO")
 	private String descricao;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_CONTA")
+	private Conta conta;
 
 	public int getId() {
 		return id;

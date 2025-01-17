@@ -13,11 +13,11 @@ public class AdministradorService {
     @Autowired
     private AdministradorRepository administradorRepository;
 
-    public List<Administrador> listarAdministradores() {
+    public List<Administrador> listarAdmin() {
         return administradorRepository.findAll();
     }
 
-    public Administrador incluirAdministrador(Administrador administrador) {
+    public Administrador criarAdmin(Administrador administrador) {
         return administradorRepository.save(administrador);
     }
 }

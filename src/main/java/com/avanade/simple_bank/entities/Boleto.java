@@ -18,15 +18,15 @@ public class Boleto {
 	@Column(name = "ID")
 	private int id;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_CONTA")
-	private Conta conta;
-	
 	@Column(name = "CODIGO_DE_BARRAS")
 	private int codigo;
 	
 	@Column(name = "BENEFICIARIO")
 	private String beneficiario;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_CONTA")
+	private Conta conta;
 
 	public int getId() {
 		return id;

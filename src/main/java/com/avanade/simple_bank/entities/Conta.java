@@ -2,17 +2,8 @@ package com.avanade.simple_bank.entities;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TB_CONTA")
@@ -21,11 +12,7 @@ public class Conta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private int id;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_USUARIO")
-	private Usuario usuario;
-	
+
 	@Column(name = "TIPO_CONTA")
 	private int tipoConta; //vai virar enum
 	
@@ -40,8 +27,23 @@ public class Conta {
 	
 	@Column(name = "SENHA")
 	private String senha;
+
+	// quem tem a chave
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_USUARIO")
+	private Usuario usuario;
+
+	@OneToOne(mappedBy = "conta")
+	private Pix pix;
+
+	@OneToOne(mappedBy = "conta")
+	private Ted ted;
+
+	@OneToOne(mappedBy = "conta")
+	private Boleto boleto;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")
+	@JsonIgnore
 	private List<Transacao> transacoes;
 
 	public int getId() {
