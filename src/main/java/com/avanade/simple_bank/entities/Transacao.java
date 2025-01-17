@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import com.avanade.simple_bank.enumerador.TipoTransacao;
 import org.hibernate.annotations.CreationTimestamp;
 
+// adiciona a descricao aqui e remover do pix e ted
 @Entity
 @Table(name = "TB_TRANSACAO")
 public class Transacao {
