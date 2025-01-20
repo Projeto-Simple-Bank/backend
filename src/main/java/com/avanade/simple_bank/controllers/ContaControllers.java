@@ -3,7 +3,6 @@ package com.avanade.simple_bank.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import com.avanade.simple_bank.entities.Conta;
@@ -62,6 +61,5 @@ public class ContaControllers {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 //		}
 //	}
-
 
 }
