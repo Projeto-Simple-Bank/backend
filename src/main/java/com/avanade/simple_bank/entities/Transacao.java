@@ -1,12 +1,12 @@
 package com.avanade.simple_bank.entities;
 
-import java.sql.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import com.avanade.simple_bank.enumerador.TipoTransacao;
 import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 // adiciona a descricao aqui e remover do pix e ted
 @Entity
@@ -17,6 +17,7 @@ public class Transacao {
 	@Column(name = "ID")
 	private int id;
 
+	// tem que arrumar os enums
 	@Column(name = "TIPO_TRANSACAO")
 	@Enumerated(EnumType.ORDINAL)
 	private TipoTransacao tipoTransacao;
@@ -24,13 +25,17 @@ public class Transacao {
 	@Column(name = "TIPO_OPERACAO")
 	private int tipoOperacao; // vai virar enum
 
-	//@JsonFormat(pattern = "dd/MM/yyyy")
+	// nao sei se está funcionando corretamente (é um teste)
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "DATA_TRANSACAO")
-	//@CreationTimestamp
-	private String dataTransacao; // por enquanto vai ficar como string só para funcionar
+	@CreationTimestamp
+	private Date dataTransacao;
 	
 	@Column(name = "VALOR")
 	private double valor;
+
+	@Column(name = "DESCRICAO")
+	private String descricao;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_CONTA")
@@ -69,11 +74,11 @@ public class Transacao {
 		this.tipoOperacao = tipoOperacao;
 	}
 
-	public String getDataTransacao() {
+	public Date getDataTransacao() {
 		return dataTransacao;
 	}
 
-	public void setDataTransacao(String dataTransacao) {
+	public void setDataTransacao(Date dataTransacao) {
 		this.dataTransacao = dataTransacao;
 	}
 
@@ -83,5 +88,13 @@ public class Transacao {
 
 	public void setValor(double valor) {
 		this.valor = valor;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 }

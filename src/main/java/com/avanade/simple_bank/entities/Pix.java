@@ -21,10 +21,6 @@ public class Pix {
 	@Column(name = "CHAVE_PIX")
 	private String chavePix;
 
-	// vai ter ir para transacao
-	@Column(name = "DESCRICAO")
-	private String descricao;
-
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_CONTA") // unique = true
 	private Conta conta;
@@ -52,13 +48,4 @@ public class Pix {
 	public void setChavePix(String chavePix) {
 		this.chavePix = chavePix;
 	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
 }

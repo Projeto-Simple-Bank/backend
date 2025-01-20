@@ -20,9 +20,6 @@ public class Ted {
 	
 	@Column(name = "TARIFA")
 	private double tarifa;
-	
-	@Column(name = "DESCRICAO")
-	private String descricao;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_CONTA")
@@ -50,13 +47,5 @@ public class Ted {
 
 	public void setTarifa(double tarifa) {
 		this.tarifa = tarifa;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 }
