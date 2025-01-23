@@ -3,7 +3,7 @@ package com.avanade.simple_bank.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
-import com.avanade.simple_bank.enumerador.TipoTransacao;
+import com.avanade.simple_bank.enumerations.TipoTransacao;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;

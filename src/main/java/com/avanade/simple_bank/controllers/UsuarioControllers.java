@@ -21,18 +21,22 @@ public class UsuarioControllers {
 	public List<Usuario> listarUsuarios() {
 		return usuarioService.listarUsuarios();
 	}
-	
+
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Usuario>> buscarUsuariosByID(@PathVariable("id") String id) {
+		return new ResponseEntity<List<Usuario>>(
+				usuarioService.buscarUsuariosByID(id), HttpStatus.OK);
+	}
+
 	@PostMapping("/criar-usuario")
 	public ResponseEntity<?> incluir(@RequestBody Usuario usuario){
 		try {
-			if(!usuario.getCpf().matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")){
+			if(!usuario.getCpf().matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")){
 				throw new RuntimeException("CPF inválido");
 			}
-
-			if(!usuario.getRg().matches("\\d{2}\\.\\d{3}\\.\\d{3}-\\d")){
+			if(!usuario.getRg().matches("\\d{1,2}\\.\\d{3}\\.\\d{3}-\\d{1}")){
 				throw new RuntimeException("RG inválido");
 			}
-
 			return new ResponseEntity<Usuario>(
 					usuarioService.incluirUsuario(usuario), HttpStatus.CREATED);
 		} catch (Exception e) {
