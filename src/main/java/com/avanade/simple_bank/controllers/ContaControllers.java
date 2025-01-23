@@ -48,6 +48,17 @@ public class ContaControllers {
 		}
 	}
 
+	@PostMapping("/login")
+	public ResponseEntity<String> login(@RequestBody Conta conta) {
+		boolean autenticado = contaService.autenticar(conta.getConta(), conta.getSenha());
+
+		if (autenticado) {
+			return ResponseEntity.ok("Login bem-sucedido!");
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas.");
+		}
+	}
+
 // atualizacao do transacao na conta do cliente
 //	@PostMapping("/saldo-atualizado/{id}")
 //	public ResponseEntity<?> atualizarSaldo(

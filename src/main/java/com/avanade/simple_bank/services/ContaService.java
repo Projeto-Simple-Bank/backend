@@ -14,8 +14,12 @@ import java.util.List;
 public class ContaService {
     @Autowired
     private ContaRepository contaRepository;
+
     @Autowired
     private TransacaoRepository transacaoRepository;
+
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
 
     public List<Conta> listarConta() {
         return contaRepository.findAll();
@@ -28,6 +32,17 @@ public class ContaService {
 
     public Conta criarConta(Conta conta) {
         return contaRepository.save(conta);
+    }
+
+    public boolean autenticar(String conta, String senha) {
+        // Buscar a conta pelo número da conta
+        Conta contaEncontrada = contaRepository.findByConta(conta);
+
+        // Verificar se a conta existe e se a senha está correta
+        if (contaEncontrada != null && contaEncontrada.getSenha().equals(senha)) {
+            return true;
+        }
+        return false;
     }
 
 //    atualizacao do transacao na conta do cliente
