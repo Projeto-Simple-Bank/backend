@@ -48,18 +48,4 @@ public class ContaControllers {
 		}
 	}
 
-// atualizacao do transacao na conta do cliente
-//	@PostMapping("/saldo-atualizado/{id}")
-//	public ResponseEntity<?> atualizarSaldo(
-//			@PathVariable("id") int contaId,  // obtém o id pela a url
-//			@RequestBody Transacao transacao) {
-//
-//		try {
-//			Conta saldoAtualizado = contaService.atualizarSaldo(contaId, transacao);
-//			return ResponseEntity.status(HttpStatus.CREATED).body(saldoAtualizado);
-//		} catch (Exception e) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//		}
-//	}
-
 }

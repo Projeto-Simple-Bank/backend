@@ -37,9 +37,6 @@ public class Conta {
 	private Pix pix;
 
 	@OneToOne(mappedBy = "conta")
-	private Ted ted;
-
-	@OneToOne(mappedBy = "conta")
 	private Boleto boleto;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")

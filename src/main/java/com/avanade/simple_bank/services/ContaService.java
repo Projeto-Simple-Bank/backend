@@ -30,22 +30,4 @@ public class ContaService {
         return contaRepository.save(conta);
     }
 
-//    atualizacao do transacao na conta do cliente
-//    public Conta atualizarSaldo(int contaId, Transacao transacao){
-//        Conta conta = contaRepository.findById(contaId)
-//                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
-//        if(transacao.getTipoOperacao() == 1){
-//            if (conta.getSaldo() < transacao.getValor()){
-//                throw new IllegalArgumentException("Saldo insuficiente");
-//            }
-//            conta.setSaldo(conta.getSaldo() - transacao.getValor());
-//        }else if(transacao.getTipoOperacao() == 2){
-//            conta.setSaldo(conta.getSaldo() + transacao.getValor());
-//        }
-//        transacao.setConta(conta);
-//        contaRepository.save(conta);
-//        transacaoRepository.save(transacao);
-//
-//        return conta;
-//    }
 }
