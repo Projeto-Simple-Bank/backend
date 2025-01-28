@@ -1,6 +1,7 @@
 package com.avanade.simple_bank.controllers;
 
 
+import com.avanade.simple_bank.dto.TransacaoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +24,12 @@ public class TransacaoControllers {
 		return transacaoService.listarTransacao();
 	}
 
-	@PostMapping("/efetuar-transacao")
-	public ResponseEntity<?> efetuarTransacao(@RequestBody Transacao transacao){
+	@PostMapping("/efetuar-pagamento")
+	public ResponseEntity<?> efetuarPagamento(@RequestBody TransacaoDTO transacaoDTO){
 		try {
-			return new ResponseEntity<Transacao>(
-					transacaoService.efetuarTransacao(transacao), HttpStatus.CREATED);
+			transacaoService.efetuarPagamento(transacaoDTO);
+			return new ResponseEntity<>(
+					"Pagamento realizado com Sucesso!", HttpStatus.CREATED);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}

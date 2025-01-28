@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import com.avanade.simple_bank.enumerador.TipoTransacao;
-import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalTime;
 import java.util.Date;
 
-// adiciona a descricao aqui e remover do pix e ted
 @Entity
 @Table(name = "TB_TRANSACAO")
 public class Transacao {
@@ -18,25 +17,27 @@ public class Transacao {
 	private int id;
 
 	// tem que arrumar os enums
+//	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "TIPO_TRANSACAO")
-	@Enumerated(EnumType.ORDINAL)
-	private TipoTransacao tipoTransacao;
-	
-	@Column(name = "TIPO_OPERACAO")
-	private int tipoOperacao; // vai virar enum
+	private int tipoTransacao;
 
 	// nao sei se está funcionando corretamente (é um teste)
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "DATA_TRANSACAO")
-	@CreationTimestamp
-	private Date dataTransacao;
-	
+//	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "DATA_TRANSACAO") // concertar
+//	private LocalDate dataTransacao;
+	private String dataTransacao;
+
+//	@JsonFormat(pattern = "HH:mm:ss")
+//	@Transient // Não precisa ser persistido no banco, apenas para a resposta
+//	private LocalTime hora;
+
 	@Column(name = "VALOR")
 	private double valor;
 
 	@Column(name = "DESCRICAO")
 	private String descricao;
 
+	// será que devo colocar json ignore na requisicao?
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_CONTA")
 	private Conta conta;
@@ -58,27 +59,20 @@ public class Transacao {
 		this.conta = conta;
 	}
 
-	public TipoTransacao getTipoTransacao() {
+	public int getTipoTransacao() {
 		return tipoTransacao;
 	}
 
-	public void setTipoTransacao(TipoTransacao tipoTransacao) {
+	public void setTipoTransacao(int tipoTransacao) {
 		this.tipoTransacao = tipoTransacao;
 	}
 
-	public int getTipoOperacao() {
-		return tipoOperacao;
-	}
 
-	public void setTipoOperacao(int tipoOperacao) {
-		this.tipoOperacao = tipoOperacao;
-	}
-
-	public Date getDataTransacao() {
+	public String getDataTransacao() {
 		return dataTransacao;
 	}
 
-	public void setDataTransacao(Date dataTransacao) {
+	public void setDataTransacao(String dataTransacao) {
 		this.dataTransacao = dataTransacao;
 	}
 
