@@ -19,14 +19,31 @@ public class Boleto {
 	private int id;
 	
 	@Column(name = "CODIGO_DE_BARRAS")
-	private int codigo;
-	
+	private String codigo;
+
+	@Column(name = "VALOR")
+	private double valor;
+
+	@Column(name = "STATUS_BOLETO")
+	private boolean statusBoleto;
+
 	@Column(name = "BENEFICIARIO")
 	private String beneficiario;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_CONTA")
 	private Conta conta;
+
+	public Boleto () {}
+
+	public Boleto(int id, String codigo, double valor, boolean statusBoleto, String beneficiario, Conta conta) {
+		this.setId(id);
+		this.setCodigo(codigo);
+		this.setValor(valor);
+		this.setStatusBoleto(statusBoleto);
+		this.setBeneficiario(beneficiario);
+		this.setConta(conta);
+	}
 
 	public int getId() {
 		return id;
@@ -36,20 +53,28 @@ public class Boleto {
 		this.id = id;
 	}
 
-	public Conta getConta() {
-		return conta;
-	}
-
-	public void setConta(Conta conta) {
-		this.conta = conta;
-	}
-
-	public int getCodigo() {
+	public String getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(int codigo) {
+	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+
+	public double getValor() {
+		return valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
+	public boolean isStatusBoleto() {
+		return statusBoleto;
+	}
+
+	public void setStatusBoleto(boolean statusBoleto) {
+		this.statusBoleto = statusBoleto;
 	}
 
 	public String getBeneficiario() {
@@ -58,5 +83,13 @@ public class Boleto {
 
 	public void setBeneficiario(String beneficiario) {
 		this.beneficiario = beneficiario;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 }
