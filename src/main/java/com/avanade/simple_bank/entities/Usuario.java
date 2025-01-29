@@ -8,7 +8,7 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private String id;
 	
 	@Column(name = "NOME")
 	private String nome;
@@ -47,11 +47,11 @@ public class Usuario {
 	@OneToOne(mappedBy = "usuario")
 	private Administrador administrador; // ---
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -16,7 +16,7 @@ public class Boleto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private String id;
 	
 	@Column(name = "CODIGO_DE_BARRAS")
 	private String codigo;
@@ -30,13 +30,15 @@ public class Boleto {
 	@Column(name = "BENEFICIARIO")
 	private String beneficiario;
 
+	// colocar data, hora, descricao e vencimento
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_CONTA")
 	private Conta conta;
 
 	public Boleto () {}
 
-	public Boleto(int id, String codigo, double valor, boolean statusBoleto, String beneficiario, Conta conta) {
+	public Boleto(String id, String codigo, double valor, boolean statusBoleto, String beneficiario, Conta conta) {
 		this.setId(id);
 		this.setCodigo(codigo);
 		this.setValor(valor);
@@ -45,11 +47,11 @@ public class Boleto {
 		this.setConta(conta);
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

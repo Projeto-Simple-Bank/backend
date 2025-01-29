@@ -1,27 +1,27 @@
 package com.avanade.simple_bank.dto;
 
 public class TransacaoDTO {
-    private int contaOrigem;
-    private int contaDestino;
+    private String contaOrigem;
+    private String contaDestino;
     private int tipoTransacao;
     private String dataTransacao;
     private double valor;
     private String descricao;
 
 
-    public int getContaOrigem() {
+    public String getContaOrigem() {
         return contaOrigem;
     }
 
-    public void setContaOrigem(int contaOrigem) {
+    public void setContaOrigem(String contaOrigem) {
         this.contaOrigem = contaOrigem;
     }
 
-    public int getContaDestino() {
+    public String getContaDestino() {
         return contaDestino;
     }
 
-    public void setContaDestino(int contaDestino) {
+    public void setContaDestino(String contaDestino) {
         this.contaDestino = contaDestino;
     }
 

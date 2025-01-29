@@ -8,7 +8,7 @@ public class Administrador {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private String id;
 
 	@Column(name = "EMAIL")
 	private String email;
@@ -20,11 +20,11 @@ public class Administrador {
 	@JoinColumn(name = "ID_USUARIO")
 	private Usuario usuario;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

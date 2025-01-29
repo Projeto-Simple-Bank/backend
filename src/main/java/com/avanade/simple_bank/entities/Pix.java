@@ -16,7 +16,7 @@ public class Pix {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private String id;
 	
 	@Column(name = "CHAVE_PIX")
 	private String chavePix;
@@ -25,11 +25,11 @@ public class Pix {
 	@JoinColumn(name = "ID_CONTA") // unique = true
 	private Conta conta;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

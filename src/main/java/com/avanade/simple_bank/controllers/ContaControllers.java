@@ -28,7 +28,7 @@ public class ContaControllers {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Conta> listarContaId(
-			@PathVariable("id") int contaId  // obtém o id pela a url
+			@PathVariable("id") String contaId  // obtém o id pela a url
 	) {
 		try {
 			return new ResponseEntity<Conta>(

@@ -17,16 +17,16 @@ public class BoletoService {
     @Autowired
     private ContaRepository contaRepository;
 
-    public Conta findById(int id) {
+    public Conta findById(String id) {
         return contaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
-
 
     public Boleto criarBoleto(Boleto boleto) {
         return boletoRepository.save(boleto);
     }
 
+    // arrumar o relacionamento do boleto
     public void pagarBoleto(Boleto boleto) {
         Boleto codigoBoleto = boletoRepository.findByCodigoDeBarras(boleto.getCodigo());
         Conta conta = findById(boleto.getConta().getId());
@@ -38,6 +38,8 @@ public class BoletoService {
         if (conta.getSaldo() < codigoBoleto.getValor() ) {
             throw new IllegalArgumentException("Saldo insuficiente!");
         }
+
+        conta.setSaldo(conta.getSaldo() - boleto.getValor());
 
         Boleto boletoPago = new Boleto();
         boletoPago.setId(boleto.getId());

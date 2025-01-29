@@ -11,7 +11,7 @@ public class Conta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private String id;
 
 	@Column(name = "TIPO_CONTA")
 	private int tipoConta; //vai virar enum
@@ -29,6 +29,7 @@ public class Conta {
 	private String senha;
 
 	// quem tem a chave
+	@JsonIgnore
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_USUARIO")
 	private Usuario usuario;
@@ -43,11 +44,11 @@ public class Conta {
 	@JsonIgnore
 	private List<Transacao> transacoes;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

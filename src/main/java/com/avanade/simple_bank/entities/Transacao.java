@@ -14,7 +14,7 @@ public class Transacao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private String id;
 
 	// tem que arrumar os enums
 //	@Enumerated(EnumType.ORDINAL)
@@ -42,12 +42,11 @@ public class Transacao {
 	@JoinColumn(name = "ID_CONTA")
 	private Conta conta;
 
-
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

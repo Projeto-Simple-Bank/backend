@@ -21,7 +21,7 @@ public class ContaService {
         return contaRepository.findAll();
     }
 
-    public Conta listarContaId(int contaId) {
+    public Conta listarContaId(String contaId) {
         return contaRepository.findById(contaId)
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }

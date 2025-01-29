@@ -25,7 +25,7 @@ public class TransacaoService {
         return transacaoRepository.findAll();
     }
 
-    public Conta findById(int id) {
+    public Conta findById(String id) {
         return contaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
@@ -46,7 +46,7 @@ public class TransacaoService {
             throw new IllegalArgumentException("Saldo insuficiente!");
         }
 
-        if (transacaoDTO.getTipoTransacao() == 1 || transacaoDTO.getTipoTransacao() == 3) {
+        if (transacaoDTO.getTipoTransacao() == 1) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor());
         } else if (transacaoDTO.getTipoTransacao() == 2) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor() - (transacaoDTO.getValor() * 0.05));
