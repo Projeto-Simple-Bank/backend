@@ -2,13 +2,15 @@ package com.avanade.simple_bank.entities;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "TB_ADMIN")
 public class Administrador {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", updatable = false, nullable = false)
+	private UUID id;
 
 	@Column(name = "EMAIL")
 	private String email;
@@ -20,11 +22,11 @@ public class Administrador {
 	@JoinColumn(name = "ID_USUARIO")
 	private Usuario usuario;
 
-	public String getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
