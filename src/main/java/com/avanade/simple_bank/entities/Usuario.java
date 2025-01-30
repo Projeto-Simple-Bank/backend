@@ -2,13 +2,15 @@ package com.avanade.simple_bank.entities;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "TB_USUARIO")
 public class Usuario {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", updatable = false, nullable = false)
+	private UUID id;
 	
 	@Column(name = "NOME")
 	private String nome;
@@ -47,11 +49,11 @@ public class Usuario {
 	@OneToOne(mappedBy = "usuario")
 	private Administrador administrador; // ---
 
-	public String getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

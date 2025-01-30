@@ -10,13 +10,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "TB_BOLETO")
 public class Boleto {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", updatable = false, nullable = false)
+	private UUID id;
 	
 	@Column(name = "CODIGO_DE_BARRAS")
 	private String codigo;
@@ -38,7 +40,7 @@ public class Boleto {
 
 	public Boleto () {}
 
-	public Boleto(String id, String codigo, double valor, boolean statusBoleto, String beneficiario, Conta conta) {
+	public Boleto(UUID id, String codigo, double valor, boolean statusBoleto, String beneficiario, Conta conta) {
 		this.setId(id);
 		this.setCodigo(codigo);
 		this.setValor(valor);
@@ -47,11 +49,11 @@ public class Boleto {
 		this.setConta(conta);
 	}
 
-	public String getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

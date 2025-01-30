@@ -9,6 +9,7 @@ import com.avanade.simple_bank.entities.Conta;
 import com.avanade.simple_bank.repositories.ContaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ContaService {
@@ -21,7 +22,7 @@ public class ContaService {
         return contaRepository.findAll();
     }
 
-    public Conta listarContaId(String contaId) {
+    public Conta listarContaId(UUID contaId) {
         return contaRepository.findById(contaId)
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }

@@ -1,6 +1,14 @@
 package com.avanade.simple_bank.repositories;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.avanade.simple_bank.entities.Pix;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-public interface PixRepository extends JpaRepository<Pix, String> { }
+import java.util.UUID;
+
+public interface PixRepository extends JpaRepository<Pix, UUID> {
+    @Query("SELECT p FROM Pix p WHERE p.chavePix = :chavePix")
+    Pix findByChavePix(@Param("chavePix") String chavePix);
+}

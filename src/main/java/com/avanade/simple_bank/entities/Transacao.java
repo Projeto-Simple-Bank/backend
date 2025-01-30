@@ -7,14 +7,15 @@ import com.avanade.simple_bank.enumerador.TipoTransacao;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "TB_TRANSACAO")
 public class Transacao {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", updatable = false, nullable = false)
+	private UUID id;
 
 	// tem que arrumar os enums
 //	@Enumerated(EnumType.ORDINAL)
@@ -42,11 +43,11 @@ public class Transacao {
 	@JoinColumn(name = "ID_CONTA")
 	private Conta conta;
 
-	public String getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

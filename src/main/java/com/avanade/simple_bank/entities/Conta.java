@@ -1,6 +1,7 @@
 package com.avanade.simple_bank.entities;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -9,9 +10,9 @@ import jakarta.persistence.*;
 @Table(name = "TB_CONTA")
 public class Conta {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", updatable = false, nullable = false)
+	private UUID id;
 
 	@Column(name = "TIPO_CONTA")
 	private int tipoConta; //vai virar enum
@@ -29,26 +30,27 @@ public class Conta {
 	private String senha;
 
 	// quem tem a chave
-	@JsonIgnore
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_USUARIO")
 	private Usuario usuario;
 
-	@OneToOne(mappedBy = "conta")
-	private Pix pix;
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "conta")
+	private List<Pix> pix;
 
+	@JsonIgnore
 	@OneToOne(mappedBy = "conta")
 	private Boleto boleto;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")
 	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")
 	private List<Transacao> transacoes;
 
-	public String getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
@@ -107,5 +109,20 @@ public class Conta {
 	public void setTransacoes(List<Transacao> transacoes) {
 		this.transacoes = transacoes;
 	}
-	
+
+	public List<Pix> getPix() {
+		return pix;
+	}
+
+	public void setPix(List<Pix> pix) {
+		this.pix = pix;
+	}
+
+	public Boleto getBoleto() {
+		return boleto;
+	}
+
+	public void setBoleto(Boleto boleto) {
+		this.boleto = boleto;
+	}
 }

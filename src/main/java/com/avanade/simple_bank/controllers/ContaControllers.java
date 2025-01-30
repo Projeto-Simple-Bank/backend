@@ -6,11 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.avanade.simple_bank.entities.Conta;
-import com.avanade.simple_bank.entities.Transacao;
-import com.avanade.simple_bank.repositories.TransacaoRepository;
 import com.avanade.simple_bank.services.ContaService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/contas")
@@ -18,8 +17,6 @@ public class ContaControllers {
 
 	@Autowired
 	private ContaService contaService;
-	@Autowired
-	private TransacaoRepository transacaoRepository;
 
 	@GetMapping("/lista")
 	public List<Conta> listarConta() {
@@ -28,7 +25,7 @@ public class ContaControllers {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Conta> listarContaId(
-			@PathVariable("id") String contaId  // obtém o id pela a url
+			@PathVariable("id") UUID contaId  // obtém o id pela a url
 	) {
 		try {
 			return new ResponseEntity<Conta>(

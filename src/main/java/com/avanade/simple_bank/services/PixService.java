@@ -14,6 +14,11 @@ public class PixService {
     @Autowired
     private PixRepository pixRepository;
 
+    public List<Pix> listarPix() {
+        return pixRepository.findAll();
+    }
+
+    // se o cadastro do pix continuar dando errado, a gente coloca a chavePix como Primary
     public Pix cadastrarPix(Pix pix) {
         return pixRepository.save(pix);
     }

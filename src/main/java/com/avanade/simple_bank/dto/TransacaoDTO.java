@@ -1,27 +1,29 @@
 package com.avanade.simple_bank.dto;
 
+import java.util.UUID;
+
 public class TransacaoDTO {
-    private String contaOrigem;
-    private String contaDestino;
+    private UUID contaOrigem;
+    private UUID contaDestino;
     private int tipoTransacao;
     private String dataTransacao;
     private double valor;
     private String descricao;
 
 
-    public String getContaOrigem() {
+    public UUID getContaOrigem() {
         return contaOrigem;
     }
 
-    public void setContaOrigem(String contaOrigem) {
+    public void setContaOrigem(UUID contaOrigem) {
         this.contaOrigem = contaOrigem;
     }
 
-    public String getContaDestino() {
+    public UUID getContaDestino() {
         return contaDestino;
     }
 
-    public void setContaDestino(String contaDestino) {
+    public void setContaDestino(UUID contaDestino) {
         this.contaDestino = contaDestino;
     }
 
