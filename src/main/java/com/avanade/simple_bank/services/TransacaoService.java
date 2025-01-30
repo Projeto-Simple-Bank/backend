@@ -47,7 +47,7 @@ public class TransacaoService {
     public void efetuarPagamento(TransacaoDTO transacaoDTO) {
         Conta contaOrigem = findById(transacaoDTO.getContaOrigem());
         Conta contaDestino = findById(transacaoDTO.getContaDestino());
-//        Pix chavePix = pixRepository.findByChavePix(contaDestino.getPix().);
+        List<Pix> chavePix = contaDestino.getPix();
 
         if (contaOrigem.getSaldo() < (transacaoDTO.getValor() + transacaoDTO.getValor() * 0.05)) {
             throw new IllegalArgumentException("Saldo insuficiente!");
@@ -57,11 +57,9 @@ public class TransacaoService {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor() - (transacaoDTO.getValor() * 0.05));
         }
 
-//        if(chavePix == null) {
-//            throw new IllegalArgumentException("Chave pix não encontrada.");
-//        }
-
-        if (transacaoDTO.getTipoTransacao() == 1) {
+        if (chavePix == null || chavePix.isEmpty()) {
+            throw new IllegalArgumentException("Chave pix não encontrada.");
+        } else if (transacaoDTO.getTipoTransacao() == 1) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor());
         }
 
