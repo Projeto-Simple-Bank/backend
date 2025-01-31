@@ -1,6 +1,7 @@
 package com.avanade.simple_bank.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +11,13 @@ import com.avanade.simple_bank.entities.Transacao;
 import com.avanade.simple_bank.repositories.TransacaoRepository;
 import com.avanade.simple_bank.services.ContaService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/contas")
 public class ContaControllers {
 
@@ -49,13 +54,19 @@ public class ContaControllers {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody Conta conta) {
-		boolean autenticado = contaService.autenticar(conta.getConta(), conta.getSenha());
+	public ResponseEntity<Map<String, Object>> login(@RequestBody Conta conta) {
+		Optional<Conta> contaAutenticada = contaService.autenticar(conta.getConta(), conta.getSenha());
 
-		if (autenticado) {
-			return ResponseEntity.ok("Login bem-sucedido!");
+		Map<String, Object> response = new HashMap<>();
+
+		if (contaAutenticada.isPresent()) {
+			response.put("message", "Login bem-sucedido!");
+			response.put("id", contaAutenticada.get().getId()); // Retorna o ID da conta logada
+
+			return ResponseEntity.ok(response);
 		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas.");
+			response.put("error", "Credenciais inválidas.");
+			return ResponseEntity.status(401).body(response);
 		}
 	}
 

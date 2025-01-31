@@ -9,6 +9,7 @@ import com.avanade.simple_bank.entities.Conta;
 import com.avanade.simple_bank.repositories.ContaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContaService {
@@ -34,15 +35,13 @@ public class ContaService {
         return contaRepository.save(conta);
     }
 
-    public boolean autenticar(String conta, String senha) {
-        // Buscar a conta pelo número da conta
+    public Optional<Conta> autenticar(String conta, String senha) {
         Conta contaEncontrada = contaRepository.findByConta(conta);
 
-        // Verificar se a conta existe e se a senha está correta
         if (contaEncontrada != null && contaEncontrada.getSenha().equals(senha)) {
-            return true;
+            return Optional.of(contaEncontrada);
         }
-        return false;
+        return Optional.empty();
     }
 
 //    atualizacao do transacao na conta do cliente
