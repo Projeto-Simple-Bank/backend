@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "TB_CONTA")
 public class Conta {
+	// colocar instituição aqui
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", updatable = false, nullable = false)
@@ -16,16 +17,16 @@ public class Conta {
 
 	@Column(name = "TIPO_CONTA")
 	private int tipoConta; //vai virar enum
-	
+
 	@Column(name = "AGENCIA")
-	private int agencia; // vai virar enum
-	
+	private int agencia;
+
 	@Column(name = "SALDO")
 	private double saldo;
-	
+
 	@Column(name = "CONTA")
 	private int conta;
-	
+
 	@Column(name = "SENHA")
 	private String senha;
 
@@ -38,10 +39,6 @@ public class Conta {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "conta")
 	private List<Pix> pix;
 
-	@JsonIgnore
-	@OneToOne(mappedBy = "conta")
-	private Boleto boleto;
-	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")
 	private List<Transacao> transacoes;
@@ -74,8 +71,8 @@ public class Conta {
 		return agencia;
 	}
 
-	public void setAgencia(int agencia) {
-		this.agencia = agencia;
+	public void setAgencia() {
+		this.agencia = 1001;
 	}
 
 	public double getSaldo() {
@@ -116,13 +113,5 @@ public class Conta {
 
 	public void setPix(List<Pix> pix) {
 		this.pix = pix;
-	}
-
-	public Boleto getBoleto() {
-		return boleto;
-	}
-
-	public void setBoleto(Boleto boleto) {
-		this.boleto = boleto;
 	}
 }

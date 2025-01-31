@@ -23,6 +23,16 @@ public class PixControllers {
 		return pixService.listarPix();
 	}
 
+	@GetMapping("/{chave-pix}")
+	public ResponseEntity<Pix> listarChavePix(@PathVariable("chave-pix") String chavePix) {
+		try {
+			return new ResponseEntity<Pix>(
+					pixService.listarChavePix(chavePix), HttpStatus.OK);
+		}catch (Exception e){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+	}
+
 	@PostMapping("/cadastrar-pix")
 	public ResponseEntity<?> cadastrarPix(@RequestBody Pix pix){
 		try {

@@ -23,6 +23,10 @@ public class PixService {
         return pixRepository.findAll();
     }
 
+    public Pix listarChavePix(String chavePix) {
+        return pixRepository.findByChavePix(chavePix);
+    }
+
     // se o cadastro do pix continuar dando errado, a gente coloca a chavePix como Primary
     public Pix cadastrarPix(Pix pix) {
         Pix chavePix = pixRepository.findByChavePix(pix.getChavePix());
@@ -30,6 +34,13 @@ public class PixService {
         if(chavePix != null){
             throw new IllegalArgumentException("Essa chave pix já existe.");
         }
+
+        Conta conta = contaRepository.findById(pix.getConta().getId()).orElseThrow(() ->
+                new IllegalArgumentException("Conta não encontrada"));
+
+        pix.setConta(conta);
+        conta.getPix().add(pix);
+        contaRepository.save(conta);
 
         return pixRepository.save(pix);
     }

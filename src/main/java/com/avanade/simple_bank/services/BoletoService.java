@@ -1,13 +1,18 @@
 package com.avanade.simple_bank.services;
 
+import com.avanade.simple_bank.dto.BoletoDTO;
 import com.avanade.simple_bank.entities.Boleto;
 import com.avanade.simple_bank.entities.Conta;
+import com.avanade.simple_bank.entities.Pix;
+import com.avanade.simple_bank.entities.Transacao;
 import com.avanade.simple_bank.repositories.BoletoRepository;
 
 import com.avanade.simple_bank.repositories.ContaRepository;
+import com.avanade.simple_bank.repositories.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,40 +24,51 @@ public class BoletoService {
     @Autowired
     private ContaRepository contaRepository;
 
-    public Conta findById(UUID id) {
-        return contaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
+    @Autowired
+    private TransacaoRepository transacaoRepository;
+
+    public List<Boleto> listarBoletos() {
+        return boletoRepository.findAll();
+    }
+
+    public Boleto ListarBoletoByCodigo(String chaveBoleto) {
+        return boletoRepository.findByCodigoDeBarras(chaveBoleto);
     }
 
     public Boleto criarBoleto(Boleto boleto) {
         return boletoRepository.save(boleto);
     }
 
-    // arrumar o relacionamento do boleto
-    public void pagarBoleto(Boleto boleto) {
-        Boleto codigoBoleto = boletoRepository.findByCodigoDeBarras(boleto.getCodigo());
-        Conta conta = findById(boleto.getConta().getId());
+    public Conta findById(UUID id) {
+        return contaRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
+    }
 
-        if(codigoBoleto == null){
+    // mudar status para true no frontend
+    public void pagarBoleto(BoletoDTO boletoDTO) {
+        Boleto codigoBoleto = boletoRepository.findByCodigoDeBarras(boletoDTO.getCodigo());
+        Conta conta = findById(boletoDTO.getContaId());
+
+        if (codigoBoleto == null) {
             throw new IllegalArgumentException("Boleto não encontrado.");
         }
 
-        if (conta.getSaldo() < codigoBoleto.getValor() ) {
+        if (conta.getSaldo() < codigoBoleto.getValor()) {
             throw new IllegalArgumentException("Saldo insuficiente!");
         }
 
-        conta.setSaldo(conta.getSaldo() - boleto.getValor());
+        conta.setSaldo(conta.getSaldo() - boletoDTO.getValor());
 
-        Boleto boletoPago = new Boleto();
-        boletoPago.setId(boleto.getId());
-        boletoPago.setCodigo(boleto.getCodigo());
-        boletoPago.setBeneficiario(boleto.getBeneficiario());
-        boletoPago.setValor(boleto.getValor());
-        boletoPago.setStatusBoleto(true);
-        boletoPago.setConta(boleto.getConta());
+        Transacao transacao = new Transacao();
+        transacao.setConta(conta);
+        transacao.setTipoTransacao(3);
+        transacao.setValor(boletoDTO.getValor());
+        transacao.setDataTransacao(boletoDTO.getDataTransacao());
+        transacao.setDescricao(boletoDTO.getBeneficiario());
 
         contaRepository.save(conta);
-        boletoRepository.save(boletoPago);
+        boletoRepository.save(codigoBoleto);
+        transacaoRepository.save(transacao);
     }
+
 
 }
