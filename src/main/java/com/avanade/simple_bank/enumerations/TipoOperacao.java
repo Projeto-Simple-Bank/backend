@@ -1,14 +1,13 @@
-package com.avanade.simple_bank.enumerador;
+package com.avanade.simple_bank.enumerations;
 
 // vou ter que ajustar esse enum
-public enum TipoTransacao {
-    PIX(1),
-    TED(2),
-    BOLETO(3);
+public enum TipoOperacao {
+    DEBITO(1),
+    CREDITO(2);
 
     private int codigo;
 
-    TipoTransacao(int codigo) {
+    TipoOperacao(int codigo) {
         this.codigo = codigo;
     }
 

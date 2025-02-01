@@ -21,4 +21,8 @@ public class UsuarioService {
 	public Usuario incluirUsuario(Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
+
+	public List<Usuario> buscarUsuariosByID(String id){
+		return usuarioRepository.buscarUsuariosByID(id);
+	}
 }

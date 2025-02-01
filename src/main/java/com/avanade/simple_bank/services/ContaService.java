@@ -10,13 +10,18 @@ import com.avanade.simple_bank.repositories.ContaRepository;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class ContaService {
     @Autowired
     private ContaRepository contaRepository;
+
     @Autowired
     private TransacaoRepository transacaoRepository;
+
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
 
     public List<Conta> listarConta() {
         return contaRepository.findAll();
@@ -31,4 +36,12 @@ public class ContaService {
         return contaRepository.save(conta);
     }
 
+    public Optional<Conta> autenticar(String conta, String senha) {
+        Conta contaEncontrada = contaRepository.findByConta(conta);
+
+        if (contaEncontrada != null && contaEncontrada.getSenha().equals(senha)) {
+            return Optional.of(contaEncontrada);
+        }
+        return Optional.empty();
+    }
 }
