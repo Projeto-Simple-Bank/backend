@@ -12,7 +12,7 @@ public class Pix {
 	@Column(name = "ID", updatable = false, nullable = false)
 	private UUID id;
 	
-	@Column(name = "CHAVE_PIX")
+	@Column(name = "CHAVE_PIX", unique = true)
 	private String chavePix;
 
 	@ManyToOne(fetch = FetchType.EAGER)
