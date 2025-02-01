@@ -22,12 +22,6 @@ public class UsuarioControllers {
 		return usuarioService.listarUsuarios();
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<List<Usuario>> buscarUsuariosByID(@PathVariable("id") String id) {
-		return new ResponseEntity<List<Usuario>>(
-				usuarioService.buscarUsuariosByID(id), HttpStatus.OK);
-	}
-
 	@PostMapping("/criar-usuario")
 	public ResponseEntity<?> incluir(@RequestBody Usuario usuario){
 		try {

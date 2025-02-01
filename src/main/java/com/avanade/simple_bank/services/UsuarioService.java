@@ -22,7 +22,4 @@ public class UsuarioService {
 		return usuarioRepository.save(usuario);
 	}
 
-	public List<Usuario> buscarUsuariosByID(String id){
-		return usuarioRepository.buscarUsuariosByID(id);
-	}
 }
