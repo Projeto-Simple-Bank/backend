@@ -27,7 +27,6 @@ public class PixService {
         return pixRepository.findByChavePix(chavePix);
     }
 
-    // se o cadastro do pix continuar dando errado, a gente coloca a chavePix como Primary
     public Pix cadastrarPix(Pix pix) {
         Pix chavePix = pixRepository.findByChavePix(pix.getChavePix());
 
@@ -39,7 +38,7 @@ public class PixService {
                 new IllegalArgumentException("Conta não encontrada"));
 
         pix.setConta(conta);
-        conta.getPix().add(pix);
+        conta.getPix().add(pix); // nao sei se precisa mesmo
         contaRepository.save(conta);
 
         return pixRepository.save(pix);

@@ -1,7 +1,7 @@
 package com.avanade.simple_bank.controllers;
 
-
 import com.avanade.simple_bank.dto.TransacaoDTO;
+import com.avanade.simple_bank.entities.Conta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,22 +16,27 @@ import java.util.List;
 @RequestMapping("/transacoes")
 public class TransacaoControllers {
 
-	@Autowired
-	private TransacaoService transacaoService;
+    @Autowired
+    private TransacaoService transacaoService;
 
-	@GetMapping("/lista")
-	public List<Transacao> listarTransacao() {
-		return transacaoService.listarTransacao();
-	}
+    @GetMapping("/{id-conta}")
+    public ResponseEntity<List<Transacao>> listarTransacoes(@PathVariable("id-conta") Conta conta) {
+        try {
+            return new ResponseEntity<List<Transacao>>(
+                    transacaoService.listarTransacoes(conta), HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
 
-	@PostMapping("/efetuar-pagamento")
-	public ResponseEntity<?> efetuarPagamento(@RequestBody TransacaoDTO transacaoDTO){
-		try {
-			transacaoService.efetuarPagamento(transacaoDTO);
-			return new ResponseEntity<>(
-					"Pagamento realizado com Sucesso!", HttpStatus.CREATED);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-		}
-	}
+    @PostMapping("/efetuar-pagamento")
+    public ResponseEntity<?> efetuarPagamento(@RequestBody TransacaoDTO transacaoDTO) {
+        try {
+            transacaoService.efetuarPagamento(transacaoDTO);
+            return new ResponseEntity<>(
+                    "Pagamento realizado com Sucesso!", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

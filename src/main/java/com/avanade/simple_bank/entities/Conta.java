@@ -20,7 +20,7 @@ public class Conta {
 	@Column(name = "TIPO_CONTA")
 	private int tipoConta; //vai virar enum
 	
-	@Column(name = "AGENCIA")
+	@Column(name = "AGENCIA") // não deve ser not null no banco
 	private int agencia;
 
 	@Column(name = "SALDO")
@@ -29,32 +29,8 @@ public class Conta {
 	@Column(name = "CONTA", unique = true)
 	private String conta;
 
-	// Construtor
-	public Conta() {
-		this.conta = gerarNumeroConta();
-		this.senha = gerarSenha();
-	}
-
-	private String gerarNumeroConta() {
-		Random random = new Random();
-		// Gera um número aleatório de 7 dígitos com zeros à esquerda
-		return String.format("%07d", random.nextInt(10000000));  // Ex: 0001234
-	}
-
 	@Column(name = "SENHA")
 	private String senha;
-
-	private String gerarSenha() {
-		SecureRandom random = new SecureRandom();
-		// Gera uma senha aleatória de 12 caracteres (usando letras e números)
-		String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		StringBuilder senha = new StringBuilder();
-		for (int i = 0; i < 12; i++) {
-			int indice = random.nextInt(caracteres.length());
-			senha.append(caracteres.charAt(indice));
-		}
-		return senha.toString();
-	}
 
 	// quem tem a chave
 	@OneToOne(fetch = FetchType.EAGER)
@@ -68,6 +44,30 @@ public class Conta {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "conta")
 	@JsonIgnore
 	private List<Transacao> transacoes;
+
+	private String gerarNumeroConta() {
+		Random random = new Random();
+		// Gera um número aleatório de 7 dígitos com zeros à esquerda
+		return String.format("%07d", random.nextInt(10000000));  // Ex: 0001234
+	}
+
+	private String gerarSenha() {
+		SecureRandom random = new SecureRandom();
+		// Gera uma senha aleatória de 12 caracteres (usando letras e números)
+		String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		StringBuilder senha = new StringBuilder();
+		for (int i = 0; i < 12; i++) {
+			int indice = random.nextInt(caracteres.length());
+			senha.append(caracteres.charAt(indice));
+		}
+		return senha.toString();
+	}
+
+	// Construtor
+	public Conta() {
+		this.setConta(gerarNumeroConta());
+		this.setSenha(gerarSenha());
+	}
 
 	public UUID getId() {
 		return id;

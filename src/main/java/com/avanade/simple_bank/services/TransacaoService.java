@@ -27,14 +27,20 @@ public class TransacaoService {
     @Autowired
     private PixRepository pixRepository;
 
-    public List<Transacao> listarTransacao() {
-        return transacaoRepository.findAll();
-    }
-
     public Conta findById(UUID id) {
         return contaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
+
+    public List<Transacao> listarTransacoes(Conta conta) {
+        Conta findConta = findById(conta.getId());
+
+        if (findConta != null) {
+            return transacaoRepository.listarTransacaoPorConta(findConta.getId());
+        }
+        throw new IllegalArgumentException("Conta não encontrada ou não há transações associadas.");
+    }
+
 
     // criar um dto onde passa a conta origem e destino
     // transacaoDTO
