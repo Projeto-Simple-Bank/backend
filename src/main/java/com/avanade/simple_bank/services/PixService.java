@@ -9,6 +9,7 @@ import com.avanade.simple_bank.repositories.PixRepository;
 import com.avanade.simple_bank.entities.Pix;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PixService {
@@ -19,11 +20,22 @@ public class PixService {
     @Autowired
     private ContaRepository contaRepository;
 
-    public List<Pix> listarPix() {
-        return pixRepository.findAll();
+    public Conta findById(UUID id) {
+        return contaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
 
-    public Pix listarChavePix(String chavePix) {
+    public List<Pix> listarPix(Conta conta) {
+        Conta findConta = findById(conta.getId());
+
+        if (findConta != null) {
+            return pixRepository.listarChavePixPorConta(findConta.getId());
+        }
+
+        throw new IllegalArgumentException("Conta não encontrada ou não há chave pix associadas.");
+    }
+
+    public Pix findChavePix(String chavePix) {
         return pixRepository.findByChavePix(chavePix);
     }
 
@@ -38,7 +50,7 @@ public class PixService {
                 new IllegalArgumentException("Conta não encontrada"));
 
         pix.setConta(conta);
-        conta.getPix().add(pix); // nao sei se precisa mesmo
+        conta.getPix().add(pix);
         contaRepository.save(conta);
 
         return pixRepository.save(pix);
