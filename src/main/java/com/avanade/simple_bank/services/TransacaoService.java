@@ -17,7 +17,6 @@ import java.util.UUID;
 
 @Service
 public class TransacaoService {
-
     @Autowired
     private TransacaoRepository transacaoRepository;
 
@@ -40,7 +39,6 @@ public class TransacaoService {
         }
         throw new IllegalArgumentException("Conta não encontrada ou não há transações associadas.");
     }
-
 
     // criar um dto onde passa a conta origem e destino
     // transacaoDTO

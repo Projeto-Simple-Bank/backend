@@ -63,7 +63,6 @@ public class Conta {
 		return senha.toString();
 	}
 
-	// Construtor
 	public Conta() {
 		this.setConta(gerarNumeroConta());
 		this.setSenha(gerarSenha());
