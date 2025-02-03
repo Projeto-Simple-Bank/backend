@@ -18,8 +18,13 @@ public class Conta {
 	private UUID id;
 
 	@Column(name = "TIPO_CONTA")
+//	@Enumerated(EnumType.STRING)  // Usando EnumType.STRING para armazenar como texto no banco
 	private int tipoConta; //vai virar enum
-	
+
+	@Column(name = "ATIVA")
+	private int ativa;
+
+
 	@Column(name = "AGENCIA") // não deve ser not null no banco
 	private int agencia;
 
@@ -50,7 +55,6 @@ public class Conta {
 		// Gera um número aleatório de 7 dígitos com zeros à esquerda
 		return String.format("%07d", random.nextInt(10000000));  // Ex: 0001234
 	}
-
 	private String gerarSenha() {
 		SecureRandom random = new SecureRandom();
 		// Gera uma senha aleatória de 12 caracteres (usando letras e números)
@@ -67,6 +71,7 @@ public class Conta {
 	public Conta() {
 		this.setConta(gerarNumeroConta());
 		this.setSenha(gerarSenha());
+		this.setAgencia(1001);
 	}
 
 	public UUID getId() {
@@ -75,6 +80,14 @@ public class Conta {
 
 	public void setId(UUID id) {
 		this.id = id;
+	}
+
+	public int getAtiva() {
+		return ativa;
+	}
+
+	public void setAtiva(int ativa) {
+		this.ativa = ativa;
 	}
 
 	public Usuario getUsuario() {
@@ -97,8 +110,8 @@ public class Conta {
 		return agencia;
 	}
 
-	public void setAgencia() {
-		this.agencia = 1001;
+	public void setAgencia(int agencia) {
+		this.agencia = agencia;
 	}
 
 	public double getSaldo() {

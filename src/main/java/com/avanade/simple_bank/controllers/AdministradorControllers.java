@@ -1,6 +1,11 @@
 package com.avanade.simple_bank.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import com.avanade.simple_bank.entities.Conta;
 import java.util.UUID;
 
 import com.avanade.simple_bank.entities.Conta;
@@ -42,6 +47,23 @@ public class AdministradorControllers {
 					adminService.editarUsuarioCliente(clienteId, cliente), HttpStatus.OK);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<Map<String, Object>> login(@RequestBody Administrador administrador) {
+		Optional<Administrador> adminAutenticado = administradorService.autenticar(administrador.getEmail(), administrador.getSenha());
+
+		Map<String, Object> response = new HashMap<>();
+
+		if (adminAutenticado.isPresent()) {
+			response.put("message", "Login bem-sucedido!");
+			response.put("id", adminAutenticado.get().getId()); // Retorna o ID da conta logada
+
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("error", "Credenciais inválidas.");
+			return ResponseEntity.status(401).body(response);
 		}
 	}
 }
