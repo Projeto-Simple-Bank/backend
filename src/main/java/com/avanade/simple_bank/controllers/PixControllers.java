@@ -19,7 +19,7 @@ public class PixControllers {
     @Autowired
     private PixService pixService;
 
-    @GetMapping("/{id-conta}")
+    @GetMapping("/listar/{id-conta}")
     public ResponseEntity<List<Pix>> listarPix(@PathVariable("id-conta") Conta conta) {
         try {
             return new ResponseEntity<List<Pix>>(

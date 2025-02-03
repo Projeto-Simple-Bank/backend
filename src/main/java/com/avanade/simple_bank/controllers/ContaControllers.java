@@ -1,5 +1,6 @@
 package com.avanade.simple_bank.controllers;
 
+import com.avanade.simple_bank.entities.Pix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,14 @@ public class ContaControllers {
 	@Autowired
 	private ContaService contaService;
 
-	@GetMapping("/lista")
-	public List<Conta> listarConta() {
-		return contaService.listarConta();
+	@GetMapping("/numero-conta/{conta}")
+	public ResponseEntity<Conta> listarNumeroConta(@PathVariable("conta") String numeroConta) {
+		try {
+			return new ResponseEntity<Conta>(
+					contaService.listarNumeroConta(numeroConta), HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
 	}
 
 	@GetMapping("/{id}")
