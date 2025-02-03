@@ -17,7 +17,6 @@ import java.util.UUID;
 
 @Service
 public class TransacaoService {
-
     @Autowired
     private TransacaoRepository transacaoRepository;
 
@@ -41,7 +40,6 @@ public class TransacaoService {
         throw new IllegalArgumentException("Conta não encontrada ou não há transações associadas.");
     }
 
-
     // criar um dto onde passa a conta origem e destino
     // transacaoDTO
 
@@ -58,15 +56,12 @@ public class TransacaoService {
         if (contaOrigem.getSaldo() < (transacaoDTO.getValor() + transacaoDTO.getValor() * 0.05)) {
             throw new IllegalArgumentException("Saldo insuficiente!");
         }
+        if (transacaoDTO.getTipoTransacao() == 1) {
+            contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor());
+        }
 
         if (transacaoDTO.getTipoTransacao() == 2) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor() - (transacaoDTO.getValor() * 0.05));
-        }
-
-        if (chavePix == null || chavePix.isEmpty()) {
-            throw new IllegalArgumentException("Chave pix não encontrada.");
-        } else if (transacaoDTO.getTipoTransacao() == 1) {
-            contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor());
         }
 
         contaDestino.setSaldo(contaDestino.getSaldo() + transacaoDTO.getValor());

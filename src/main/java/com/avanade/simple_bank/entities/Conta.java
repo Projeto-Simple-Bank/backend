@@ -63,10 +63,10 @@ public class Conta {
 		return senha.toString();
 	}
 
-	// Construtor
 	public Conta() {
 		this.setConta(gerarNumeroConta());
 		this.setSenha(gerarSenha());
+		this.setAgencia(1001);
 	}
 
 	public UUID getId() {
@@ -97,8 +97,8 @@ public class Conta {
 		return agencia;
 	}
 
-	public void setAgencia() {
-		this.agencia = 1001;
+	public void setAgencia(int agencia) {
+		this.agencia = agencia;
 	}
 
 	public double getSaldo() {
