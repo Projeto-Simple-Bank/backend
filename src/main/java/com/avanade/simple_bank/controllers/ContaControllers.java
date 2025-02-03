@@ -22,6 +22,11 @@ public class ContaControllers {
 	@Autowired
 	private ContaService contaService;
 
+	@GetMapping("/lista")
+	public List<Conta> listarContas() {
+		return contaService.listarContas();
+	}
+
 	@GetMapping("/numero-conta/{conta}")
 	public ResponseEntity<Conta> listarNumeroConta(@PathVariable("conta") String numeroConta) {
 		try {

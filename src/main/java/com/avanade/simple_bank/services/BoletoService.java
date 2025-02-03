@@ -31,8 +31,8 @@ public class BoletoService {
         return boletoRepository.findAll();
     }
 
-    public Boleto ListarBoletoByCodigo(String chaveBoleto) {
-        return boletoRepository.findByCodigoDeBarras(chaveBoleto);
+    public Boleto listarBoletoByCodigo(String codigo) {
+        return boletoRepository.findByCodigoDeBarras(codigo);
     }
 
     public Boleto criarBoleto(Boleto boleto) {

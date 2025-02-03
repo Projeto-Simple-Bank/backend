@@ -1,10 +1,7 @@
 package com.avanade.simple_bank.controllers;
 
 import com.avanade.simple_bank.dto.BoletoDTO;
-import com.avanade.simple_bank.dto.TransacaoDTO;
 import com.avanade.simple_bank.entities.Boleto;
-import com.avanade.simple_bank.entities.Conta;
-import com.avanade.simple_bank.entities.Pix;
 import com.avanade.simple_bank.services.BoletoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +23,11 @@ public class BoletoControllers {
 		return boletoService.listarBoletos();
 	}
 
-	@GetMapping("/{codigo-boleto}")
-	public ResponseEntity<Boleto> ListarBoletoByCodigo(@PathVariable("codigo-boleto") String chaveBoleto) {
+	@GetMapping("/{codigo}")
+	public ResponseEntity<Boleto> listarBoletoByCodigo(@PathVariable("codigo") String codigo) {
 		try {
 			return new ResponseEntity<Boleto>(
-					boletoService.ListarBoletoByCodigo(chaveBoleto), HttpStatus.OK);
+					boletoService.listarBoletoByCodigo(codigo), HttpStatus.OK);
 		}catch (Exception e){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}

@@ -1,7 +1,6 @@
 package com.avanade.simple_bank.controllers;
 
 import com.avanade.simple_bank.entities.Conta;
-import com.avanade.simple_bank.entities.Transacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

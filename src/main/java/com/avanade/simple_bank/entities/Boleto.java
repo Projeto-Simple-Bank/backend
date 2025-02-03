@@ -17,8 +17,9 @@ public class Boleto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", updatable = false, nullable = false)
 	private UUID id;
-	
-	@Column(name = "CODIGO_DE_BARRAS")
+
+	// ver se isso vai dar problema no banco por ter sido só alterado aqui (unique)
+	@Column(name = "CODIGO_DE_BARRAS", unique = true)
 	private String codigo;
 
 	@Column(name = "VALOR")
@@ -33,8 +34,6 @@ public class Boleto {
 
 	@Column(name = "BENEFICIARIO")
 	private String beneficiario;
-
-	// colocar data, hora e vencimento
 
 	public UUID getId() {
 		return id;

@@ -23,17 +23,20 @@ public class ContaService {
 //    @Autowired
 //    private BCryptPasswordEncoder passwordEncoder;
 
-    public Conta listarContaId(UUID contaId) {
-        return contaRepository.findById(contaId)
-                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
+    public List<Conta> listarContas() {
+        return contaRepository.findAll();
     }
-
     public Conta listarNumeroConta(String numeroConta) {
         if (numeroConta == null){
             throw new IllegalArgumentException("Conta não existe.");
         }
 
         return contaRepository.findByConta(numeroConta);
+    }
+
+    public Conta listarContaId(UUID contaId) {
+        return contaRepository.findById(contaId)
+                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
 
     public Conta criarConta(Conta conta) {

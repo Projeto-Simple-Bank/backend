@@ -25,6 +25,10 @@ public class PixService {
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
 
+    public Pix findChavePix(String chavePix) {
+        return pixRepository.findByChavePix(chavePix);
+    }
+
     public List<Pix> listarPix(Conta conta) {
         Conta findConta = findById(conta.getId());
 
@@ -33,10 +37,6 @@ public class PixService {
         }
 
         throw new IllegalArgumentException("Conta não encontrada ou não há chave pix associadas.");
-    }
-
-    public Pix findChavePix(String chavePix) {
-        return pixRepository.findByChavePix(chavePix);
     }
 
     public Pix cadastrarPix(Pix pix) {
