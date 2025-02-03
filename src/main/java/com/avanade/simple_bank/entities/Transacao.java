@@ -1,48 +1,47 @@
 package com.avanade.simple_bank.entities;
 
-import java.sql.Date;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "TB_TRANSACAO")
 public class Transacao {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private int id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_CONTA")
-	private Conta conta;
-	
-	@Column(name = "TIPO_TRASACAO")
-	private int tipoTransacao; // vai virar enum
-	
-	@Column(name = "TIPO_OPERACAO")
-	private int tipoOperacao; // vai virar enum
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", updatable = false, nullable = false)
+	private UUID id;
 
-	@Column(name = "DATA_TRASACAO")
-	private Date dataTransacao;
-	
+	// tem que arrumar os enums
+//	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "TIPO_TRANSACAO")
+	private int tipoTransacao;
+
+	// nao sei se está funcionando corretamente (é um teste)
+//	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "DATA_TRANSACAO") // concertar
+//	private LocalDate dataTransacao;
+	private String dataTransacao;
+
+//	@JsonFormat(pattern = "HH:mm:ss")
+//	@Transient // Não precisa ser persistido no banco, apenas para a resposta
+//	private LocalTime hora;
+
 	@Column(name = "VALOR")
 	private double valor;
 
-	public int getId() {
+	@Column(name = "DESCRICAO")
+	private String descricao;
+
+	// será que devo colocar json ignore na requisicao?
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_CONTA")
+	private Conta conta;
+
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
@@ -62,19 +61,12 @@ public class Transacao {
 		this.tipoTransacao = tipoTransacao;
 	}
 
-	public int getTipoOperacao() {
-		return tipoOperacao;
-	}
 
-	public void setTipoOperacao(int tipoOperacao) {
-		this.tipoOperacao = tipoOperacao;
-	}
-
-	public Date getDataTransacao() {
+	public String getDataTransacao() {
 		return dataTransacao;
 	}
 
-	public void setDataTransacao(Date dataTransacao) {
+	public void setDataTransacao(String dataTransacao) {
 		this.dataTransacao = dataTransacao;
 	}
 
@@ -84,5 +76,13 @@ public class Transacao {
 
 	public void setValor(double valor) {
 		this.valor = valor;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 }

@@ -1,38 +1,29 @@
 package com.avanade.simple_bank.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "TB_PIX")
 public class Pix {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", updatable = false, nullable = false)
+	private UUID id;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_CONTA")
-	private Conta conta;
-	
-	@Column(name = "CHAVE_PIX")
+	@Column(name = "CHAVE_PIX", unique = true)
 	private String chavePix;
-	
-	@Column(name = "DESCRICAO")
-	private String descricao;
 
-	public int getId() {
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_CONTA") // unique = true
+	private Conta conta;
+
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
@@ -51,13 +42,4 @@ public class Pix {
 	public void setChavePix(String chavePix) {
 		this.chavePix = chavePix;
 	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
 }
