@@ -3,7 +3,6 @@ package com.avanade.simple_bank.services;
 import com.avanade.simple_bank.dto.BoletoDTO;
 import com.avanade.simple_bank.entities.Boleto;
 import com.avanade.simple_bank.entities.Conta;
-import com.avanade.simple_bank.entities.Pix;
 import com.avanade.simple_bank.entities.Transacao;
 import com.avanade.simple_bank.repositories.BoletoRepository;
 
@@ -36,6 +35,12 @@ public class BoletoService {
     }
 
     public Boleto criarBoleto(Boleto boleto) {
+        Boleto codigoBoleto = boletoRepository.findByCodigoDeBarras(boleto.getCodigo());
+
+        if(codigoBoleto != null){
+            throw new IllegalArgumentException("Esse código boleto já existe");
+        }
+
         return boletoRepository.save(boleto);
     }
 
@@ -45,14 +50,14 @@ public class BoletoService {
 
     // mudar status para true no frontend
     public void pagarBoleto(BoletoDTO boletoDTO) {
-        Boleto codigoBoleto = boletoRepository.findByCodigoDeBarras(boletoDTO.getCodigo());
+        Boleto boleto = boletoRepository.findByCodigoDeBarras(boletoDTO.getCodigo());
         Conta conta = findById(boletoDTO.getContaId());
 
-        if (codigoBoleto == null) {
+        if (boleto == null) {
             throw new IllegalArgumentException("Boleto não encontrado.");
         }
 
-        if (conta.getSaldo() < codigoBoleto.getValor()) {
+        if (conta.getSaldo() < boleto.getValor()) {
             throw new IllegalArgumentException("Saldo insuficiente!");
         }
 
@@ -66,7 +71,7 @@ public class BoletoService {
         transacao.setDescricao(boletoDTO.getBeneficiario());
 
         contaRepository.save(conta);
-        boletoRepository.save(codigoBoleto);
+        boletoRepository.save(boleto);
         transacaoRepository.save(transacao);
     }
 
