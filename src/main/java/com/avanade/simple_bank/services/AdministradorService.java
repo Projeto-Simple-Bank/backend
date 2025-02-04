@@ -1,5 +1,6 @@
 package com.avanade.simple_bank.services;
 
+import com.avanade.simple_bank.dto.ClienteDTO;
 import com.avanade.simple_bank.entities.Administrador;
 import com.avanade.simple_bank.entities.Conta;
 import com.avanade.simple_bank.entities.Usuario;
@@ -23,6 +24,9 @@ public class AdministradorService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private ContaRepository contaRepository;
+
     public List<Administrador> listarAdmin() {
         return administradorRepository.findAll();
     }
@@ -45,5 +49,20 @@ public class AdministradorService {
             return administrador;
         }
         return Optional.empty();
+    }
+
+    public void alterarCliente(ClienteDTO clienteDTO) {
+        Usuario usuario = usuarioRepository.findById(clienteDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        Conta conta = contaRepository.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+
+        usuario.setNome(clienteDTO.getNome());
+        usuario.setCep(clienteDTO.getEndereco());
+        conta.setTipoConta(clienteDTO.getTipoConta());
+        conta.setAtiva(clienteDTO.getAtiva());
+
+        usuarioRepository.save(usuario);
+        contaRepository.save(conta);
     }
 }

@@ -6,4 +6,6 @@ import com.avanade.simple_bank.entities.Usuario;
 
 import java.util.UUID;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, UUID>{}
+public interface UsuarioRepository extends JpaRepository<Usuario, UUID>{
+
+}

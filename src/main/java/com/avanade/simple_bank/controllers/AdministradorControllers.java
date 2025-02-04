@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.avanade.simple_bank.dto.ClienteDTO;
 import com.avanade.simple_bank.entities.Conta;
 import java.util.UUID;
 
@@ -41,12 +42,14 @@ public class AdministradorControllers {
 	}
 
 	@PutMapping("/editar-cliente")
-	public ResponseEntity<?> editarUsuarioCliente(@PathVariable("id") UUID clienteId, @RequestBody Usuario cliente){
+	public ResponseEntity<?> editarCliente(@RequestBody ClienteDTO clienteDTO) {
 		try {
-			return new ResponseEntity<>(
-					adminService.editarUsuarioCliente(clienteId, cliente), HttpStatus.OK);
+			adminService.alterarCliente(clienteDTO);
+			return ResponseEntity.ok("Cliente atualizado com sucesso");
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar cliente");
 		}
 	}
 
