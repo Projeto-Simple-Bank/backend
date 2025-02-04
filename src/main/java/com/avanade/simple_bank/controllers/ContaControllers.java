@@ -1,6 +1,7 @@
 package com.avanade.simple_bank.controllers;
 
-import com.avanade.simple_bank.entities.Pix;
+import com.avanade.simple_bank.repositories.ContaRepository;
+import com.avanade.simple_bank.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ public class ContaControllers {
 
 	@Autowired
 	private ContaService contaService;
+	private UsuarioRepository usuarioRepository;
+	private ContaRepository contaRepository;
 
 	@GetMapping("/lista")
 	public List<Conta> listarContas() {

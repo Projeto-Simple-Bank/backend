@@ -40,7 +40,7 @@ public class AdministradorControllers {
 		}
 	}
 
-	@PutMapping("/editar-cliente/{id}")
+	@PutMapping("/editar-cliente")
 	public ResponseEntity<?> editarUsuarioCliente(@PathVariable("id") UUID clienteId, @RequestBody Usuario cliente){
 		try {
 			return new ResponseEntity<>(
@@ -52,7 +52,7 @@ public class AdministradorControllers {
 
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody Administrador administrador) {
-		Optional<Administrador> adminAutenticado = administradorService.autenticar(administrador.getEmail(), administrador.getSenha());
+		Optional<Administrador> adminAutenticado = adminService.autenticar(administrador.getEmail(), administrador.getSenha());
 
 		Map<String, Object> response = new HashMap<>();
 

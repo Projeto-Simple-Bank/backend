@@ -75,4 +75,12 @@ public class Boleto {
 	public void setBeneficiario(String beneficiario) {
 		this.beneficiario = beneficiario;
 	}
+
+	public String getDataVencimento() {
+		return dataVencimento;
+	}
+
+	public void setDataVencimento(String dataVencimento) {
+		this.dataVencimento = dataVencimento;
+	}
 }
