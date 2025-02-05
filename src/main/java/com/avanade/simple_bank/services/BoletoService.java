@@ -3,7 +3,6 @@ package com.avanade.simple_bank.services;
 import com.avanade.simple_bank.dto.BoletoDTO;
 import com.avanade.simple_bank.entities.Boleto;
 import com.avanade.simple_bank.entities.Conta;
-import com.avanade.simple_bank.entities.Pix;
 import com.avanade.simple_bank.entities.Transacao;
 import com.avanade.simple_bank.repositories.BoletoRepository;
 
@@ -37,9 +36,11 @@ public class BoletoService {
 
     public Boleto criarBoleto(Boleto boleto) {
         Boleto codigoBoleto = boletoRepository.findByCodigoDeBarras(boleto.getCodigo());
+
         if(codigoBoleto != null){
             throw new IllegalArgumentException("Esse código boleto já existe");
         }
+
         return boletoRepository.save(boleto);
     }
 

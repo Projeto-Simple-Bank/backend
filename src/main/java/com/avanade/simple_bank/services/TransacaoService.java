@@ -2,7 +2,6 @@ package com.avanade.simple_bank.services;
 
 import com.avanade.simple_bank.dto.TransacaoDTO;
 import com.avanade.simple_bank.entities.Conta;
-import com.avanade.simple_bank.entities.Pix;
 import com.avanade.simple_bank.repositories.ContaRepository;
 import com.avanade.simple_bank.repositories.PixRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,11 @@ public class TransacaoService {
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
 
+    public Transacao listarTransacaoPorId(Transacao transacao) {
+        return transacaoRepository.findById(transacao.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Transação não encontrada"));
+    }
+
     public List<Transacao> listarTransacoes(Conta conta) {
         Conta findConta = findById(conta.getId());
 
@@ -41,24 +45,19 @@ public class TransacaoService {
         throw new IllegalArgumentException("Conta não encontrada ou não há transações associadas.");
     }
 
-
-    // criar um dto onde passa a conta origem e destino
-    // transacaoDTO
-
     // O Transactional serve para fazer com que a requisição de efetuar pagamento funcione
     // até porque aqui é usado mais de um repository
     // (ex: contaRepository que é de conta), então ajuda que os
     // repository de outros lugares funcione reunido dentro de um lugar só
     @Transactional
-    public void efetuarPagamento(TransacaoDTO transacaoDTO) {
+    public UUID efetuarPagamento(TransacaoDTO transacaoDTO) {
         Conta contaOrigem = findById(transacaoDTO.getContaOrigem());
         Conta contaDestino = findById(transacaoDTO.getContaDestino());
 
         if (contaOrigem.getSaldo() < (transacaoDTO.getValor() + transacaoDTO.getValor() * 0.05)) {
             throw new IllegalArgumentException("Saldo insuficiente!");
         }
-
-         if (transacaoDTO.getTipoTransacao() == 1) {
+        if (transacaoDTO.getTipoTransacao() == 1) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor());
         }
 
@@ -86,5 +85,7 @@ public class TransacaoService {
         contaRepository.save(contaDestino);
         transacaoRepository.save(transacaoOrigem);
         transacaoRepository.save(transacaoDestino);
+
+        return transacaoOrigem.getId();
     }
 }

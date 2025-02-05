@@ -11,6 +11,8 @@ import com.avanade.simple_bank.entities.Transacao;
 import com.avanade.simple_bank.services.TransacaoService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/transacoes")
@@ -19,7 +21,7 @@ public class TransacaoControllers {
     @Autowired
     private TransacaoService transacaoService;
 
-    @GetMapping("/{id-conta}")
+    @GetMapping("/listar/{id-conta}")
     public ResponseEntity<List<Transacao>> listarTransacoes(@PathVariable("id-conta") Conta conta) {
         try {
             return new ResponseEntity<List<Transacao>>(
@@ -29,12 +31,21 @@ public class TransacaoControllers {
         }
     }
 
+    @GetMapping("/{id-transacao}")
+    public ResponseEntity<Transacao> listarTransacaoPorId(@PathVariable("id-transacao") Transacao transacao) {
+        try {
+            return new ResponseEntity<Transacao>(
+                    transacaoService.listarTransacaoPorId(transacao), HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
     @PostMapping("/efetuar-pagamento")
     public ResponseEntity<?> efetuarPagamento(@RequestBody TransacaoDTO transacaoDTO) {
         try {
-            transacaoService.efetuarPagamento(transacaoDTO);
-            return new ResponseEntity<>(
-                    "Pagamento realizado com Sucesso!", HttpStatus.CREATED);
+            UUID transacaoId = transacaoService.efetuarPagamento(transacaoDTO);
+            return new ResponseEntity<>(Map.of("message", "Pagamento realizado com Sucesso!", "transacaoId", transacaoId), HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

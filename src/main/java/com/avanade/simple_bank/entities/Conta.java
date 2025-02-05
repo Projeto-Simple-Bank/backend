@@ -24,7 +24,6 @@ public class Conta {
 	@Column(name = "ATIVA")
 	private int ativa;
 
-
 	@Column(name = "AGENCIA") // não deve ser not null no banco
 	private int agencia;
 
@@ -67,7 +66,6 @@ public class Conta {
 		return senha.toString();
 	}
 
-	// Construtor
 	public Conta() {
 		this.setConta(gerarNumeroConta());
 		this.setSenha(gerarSenha());
