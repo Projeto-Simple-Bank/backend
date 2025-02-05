@@ -31,6 +31,11 @@ public class TransacaoService {
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
 
+    public Transacao listarTransacaoPorId(Transacao transacao) {
+        return transacaoRepository.findById(transacao.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Transação não encontrada"));
+    }
+
     public List<Transacao> listarTransacoes(Conta conta) {
         Conta findConta = findById(conta.getId());
 
@@ -48,10 +53,9 @@ public class TransacaoService {
     // (ex: contaRepository que é de conta), então ajuda que os
     // repository de outros lugares funcione reunido dentro de um lugar só
     @Transactional
-    public void efetuarPagamento(TransacaoDTO transacaoDTO) {
+    public UUID efetuarPagamento(TransacaoDTO transacaoDTO) {
         Conta contaOrigem = findById(transacaoDTO.getContaOrigem());
         Conta contaDestino = findById(transacaoDTO.getContaDestino());
-        List<Pix> chavePix = contaDestino.getPix();
 
         if (contaOrigem.getSaldo() < (transacaoDTO.getValor() + transacaoDTO.getValor() * 0.05)) {
             throw new IllegalArgumentException("Saldo insuficiente!");
@@ -84,5 +88,7 @@ public class TransacaoService {
         contaRepository.save(contaDestino);
         transacaoRepository.save(transacaoOrigem);
         transacaoRepository.save(transacaoDestino);
+
+        return transacaoOrigem.getId();
     }
 }
