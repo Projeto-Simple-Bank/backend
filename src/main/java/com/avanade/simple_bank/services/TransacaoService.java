@@ -54,14 +54,18 @@ public class TransacaoService {
         Conta contaOrigem = findById(transacaoDTO.getContaOrigem());
         Conta contaDestino = findById(transacaoDTO.getContaDestino());
 
-        if (contaOrigem.getSaldo() < (transacaoDTO.getValor() + transacaoDTO.getValor() * 0.05)) {
-            throw new IllegalArgumentException("Saldo insuficiente!");
-        }
         if (transacaoDTO.getTipoTransacao() == 1) {
+            if (contaOrigem.getSaldo() < transacaoDTO.getValor()) {
+                throw new IllegalArgumentException("Saldo insuficiente!");
+            }
             contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor());
         }
 
         if (transacaoDTO.getTipoTransacao() == 2) {
+            if (contaOrigem.getSaldo() < (transacaoDTO.getValor() + transacaoDTO.getValor() * 0.05)) {
+                throw new IllegalArgumentException("Saldo insuficiente!");
+            }
+
             contaOrigem.setSaldo(contaOrigem.getSaldo() - transacaoDTO.getValor() - (transacaoDTO.getValor() * 0.05));
         }
 
@@ -75,7 +79,7 @@ public class TransacaoService {
         transacaoOrigem.setDescricao(transacaoDTO.getDescricao());
 
         Transacao transacaoDestino = new Transacao();
-        transacaoDestino.setConta(contaDestino); // acho que ao enviar aqui retorna a chavePix
+        transacaoDestino.setConta(contaDestino);
         transacaoDestino.setTipoTransacao(transacaoDTO.getTipoTransacao());
         transacaoDestino.setValor(transacaoDTO.getValor());
         transacaoDestino.setDataTransacao(transacaoDTO.getDataTransacao());
