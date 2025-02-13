@@ -48,7 +48,7 @@ public class BoletoService {
         return contaRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Conta não encontrada"));
     }
 
-    // mudar status para true no frontend
+    // mudar status para true no frontend e fazer uma validacao 
     public void pagarBoleto(BoletoDTO boletoDTO) {
         Boleto boleto = boletoRepository.findByCodigoDeBarras(boletoDTO.getCodigo());
         Conta conta = findById(boletoDTO.getContaId());
@@ -61,6 +61,10 @@ public class BoletoService {
             throw new IllegalArgumentException("Saldo insuficiente!");
         }
 
+        if(boletoDTO.getStatusBoleto()){
+            throw new IllegalArgumentException("Esse boleto já foi pago!");
+        }
+
         conta.setSaldo(conta.getSaldo() - boletoDTO.getValor());
 
         Transacao transacao = new Transacao();
@@ -69,6 +73,8 @@ public class BoletoService {
         transacao.setValor(boletoDTO.getValor());
         transacao.setDataTransacao(boletoDTO.getDataTransacao());
         transacao.setDescricao(boletoDTO.getBeneficiario());
+
+        boletoDTO.setTransacaoId(transacao.getId());
 
         contaRepository.save(conta);
         boletoRepository.save(boleto);

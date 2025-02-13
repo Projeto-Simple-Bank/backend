@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public class BoletoDTO {
     private UUID contaId;
+    private UUID transacaoId;
     private String codigo;
     private double valor;
     private String dataVencimento;
@@ -17,6 +18,14 @@ public class BoletoDTO {
 
     public void setContaId(UUID contaId) {
         this.contaId = contaId;
+    }
+
+    public UUID getTransacaoId() {
+        return transacaoId;
+    }
+
+    public void setTransacaoId(UUID transacaoId) {
+        this.transacaoId = transacaoId;
     }
 
     public String getCodigo() {
@@ -43,7 +52,7 @@ public class BoletoDTO {
         this.dataVencimento = dataVencimento;
     }
 
-    public boolean isStatusBoleto() {
+    public boolean getStatusBoleto() {
         return statusBoleto;
     }
 
